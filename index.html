@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title id="title">NicomiTimer</title>
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="icon" href="icon.ico" type="image/x-icon" id="icon">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap" rel="stylesheet">
+</head>
+
+<body id="body">
+  <!--バージョンとコピーライト-->
+  <a id="copyright" href="https://github.com/niruca6/NicomiTimer" target="_blank" rel="noopener noreferrer">v1.1.0 - Beta 1 | © 2025 Niruca</a>
+
+
+  <!--時間-->
+  <p id="time">00:00</p>
+  <div id="time-bar"></div>
+
+
+  <!--ショートカット-->
+  <div id="shortcuts">
+    <button type=“button” onclick="start(180)" class="quick-start">3:00</button>
+    <button type=“button” onclick="start(300)" class="quick-start">5:00</button>
+    <button type=“button” onclick="start(600)" class="quick-start">10:00</button>
+    <button type=“button” onclick="start(900)" class="quick-start">15:00</button>
+    <button type=“button” onclick="start(1200)" class="quick-start">20:00</button>
+    <button type=“button” onclick="start(1500)" class="quick-start">25:00</button>
+    <button type=“button” onclick="start(1800)" class="quick-start">30:00</button>
+  </div>
+
+
+  <!--指定入力欄-->
+  <div id="input-field">
+    <p id="input-field-guide" class="guide">Enter the time you want here:</p>
+    <input class="align-right" type="number" id="minutes" name="minutes" placeholder="00" />
+    <p class="input-colon">:</p>
+    <input type="number" id="seconds" name="seconds" placeholder="00" maxlength="2" />
+  </div>
+
+
+  <!--オプション-->
+  <div id="option">
+    <input type="checkbox" id="auto-stop" name="auto-stop">
+    <label for="auto-stop" id="auto-stop-label">Auto-stop timer</label>
+
+    <br>
+
+    <div id="volume-option-div">
+    <input type="range" id="volume-bar" class="volume-bar" name="volume-bar" min="0" max="100" value="10" step="1"
+      list="markers" />
+    <label for="volume-bar" id="volume-bar-label">Volume: 10%</label>
+
+    <datalist id="markers">
+      <option value="10"></option>
+    </datalist>
+
+    <br>
+
+    <input type="checkbox" id="mute" name="mute">
+    <label for="mute" id="mute-label"> <img src="img/unmuted.png" alt="Unmuted" height="20px" width="20px" id="mute-icon"> </label>
+    </div>
+  </div>
+
+
+  <!--タイマー稼働時に表示されるUI-->
+  <div id="timer-menu">
+    <button type=“button” onclick="pause()" id="pause">❙ ❙</button>
+    <button type=“button” onclick="reset()" id="reset">✖︎</button><!--
+  --><button type=“button” onclick="resume()" id="resume">▶︎</button><!--
+  --><button type=“button” onclick="startWithInput()" id="start">▶︎</button>
+  </div>
+
+
+  <script src="main.js"></script>
+</body>
+
+</html>
