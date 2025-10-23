@@ -18,7 +18,7 @@
 
 <body id="body">
   <!--バージョンとコピーライト-->
-  <a id="copyright" href="https://github.com/niruca6/NicomiTimer" target="_blank" rel="noopener noreferrer">v1.1.0 - Beta 1 | © 2025 Niruca</a>
+  <a id="copyright" href="https://github.com/niruca6/NicomiTimer" target="_blank" rel="noopener noreferrer">🔗 GUIDE | v1.1.0 - Beta 1 | © 2025 Niruca</a>
 
 
   <!--時間-->
@@ -49,7 +49,7 @@
 
   <!--オプション-->
   <div id="option">
-    <input type="checkbox" id="auto-stop" name="auto-stop">
+    <input type="checkbox" id="auto-stop" name="auto-stop" onclick="asyncAutoStopMode();">
     <label for="auto-stop" id="auto-stop-label">Auto-stop timer</label>
 
     <br>
@@ -65,7 +65,7 @@
 
     <br>
 
-    <input type="checkbox" id="mute" name="mute">
+    <input type="checkbox" id="mute" name="mute" onclick="asyncMute();">
     <label for="mute" id="mute-label"> <img src="img/unmuted.png" alt="Unmuted" height="20px" width="20px" id="mute-icon"> </label>
     </div>
   </div>

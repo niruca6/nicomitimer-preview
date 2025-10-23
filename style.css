@@ -4,7 +4,7 @@ body {
   margin-left: 30px;
   margin-top: 30px;
   transition: all 1s ease-out;
-  
+
 
   font-family: "Raleway", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
   font-weight: 100;
@@ -13,6 +13,7 @@ body {
   font-size: 18px;
   letter-spacing: 0.05em;
 }
+
 img {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -41,7 +42,7 @@ button {
   border-width: 1px;
   border-spacing: 5px;
   border-color: transparent;
-  border-style:dotted;
+  border-style: dotted;
   font-family: "Raleway";
   font-weight: lighter;
 
@@ -50,6 +51,7 @@ button {
 
   transition: all 0.3s ease-out;
 }
+
 button:hover {
   border-bottom-color: white;
 }
@@ -59,25 +61,31 @@ button:hover {
   transition: all 0.3s ease-out;
   display: flex;
 }
+.quick-start {
+  z-index: 101;
+}
 
 
 label {
   opacity: 65%;
 }
+
 #option {
   position: absolute;
   bottom: 30px;
   left: 30px;
-  
+
 }
+
 #option input {
   filter: saturate(0%) contrast(70%);
 }
 
 #volume-option-div {
-  display:flex;
+  display: flex;
   transition: all 0.3s ease-out;
 }
+
 #volume-bar {
   height: 30px;
   margin-top: 0px;
@@ -86,19 +94,35 @@ label {
 
   transition: all 0.1s ease-out;
 }
+
 #volume-bar-label {
-  float:right;
+  float: right;
 
   transition: all 0.1s ease-out;
 }
+
 #mute {
   -ms-transform: scale(0, 0);
   -webkit-transform: scale(0, 0);
   transform: scale(0, 0);
 }
 
-#mute:checked + #mute-label {
+#mute:checked+#mute-label {
   opacity: 100%;
+}
+
+#mute-icon {
+  border-width: 1px;
+  border-spacing: 5px;
+  border-color: transparent;
+  border-style: dotted;
+
+  padding-bottom: 3px;
+
+  transition: all 0.2s ease-out;
+}
+#mute-icon:hover {
+  border-bottom-color: white;
 }
 
 #auto-stop {
@@ -109,6 +133,7 @@ label {
 
   transition: all 0.3s ease-out;
 }
+
 #auto-stop-label {
   height: 14px;
   padding-left: 3px;
@@ -127,27 +152,31 @@ label {
 
   transition: transform 1s ease-out;
 }
+#timer-menu button {
+  height: 50px;
+  width: 50px;
+
+  font-size: 30px;
+}
 
 #pause {
   display: none;
-  font-size: 30px;
 }
 
 #resume {
   display: none;
-  font-size: 30px;
 }
 
 #reset {
   display: none;
-  font-size: 30px;
   color: white;
   margin-right: 30px;
   transition: all 0.3s ease-out;
 }
+
 #reset:hover {
-  color:rgb(255, 157, 157);
-  border-bottom-color:rgb(255, 157, 157);
+  color: rgb(255, 157, 157);
+  border-bottom-color: rgb(255, 157, 157);
 }
 
 
@@ -170,6 +199,7 @@ label {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+
 #input-field input {
   background-color: transparent;
   color: white;
@@ -188,14 +218,18 @@ label {
   border: none;
   transition: all 1s ease-out;
 }
-input::-webkit-inner-spin-button, input::-webkit-outer-spin-button {
+
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
   display: none;
 }
+
 input:focus {
   outline: none;
   text-decoration: none;
   caret-color: rgba(255, 255, 255, 0.8);
 }
+
 .input-colon {
   font-size: 150px;
   font-family: 'Raleway';
@@ -203,6 +237,7 @@ input:focus {
   margin-top: auto;
   transition: all 1s ease-out;
 }
+
 #input-field-guide {
   position: absolute;
   left: 50%;
@@ -227,6 +262,7 @@ input:focus {
   transition: all 1s ease-out;
   filter: invert(0%);
 }
+
 .colon {
   transition: all 0.8s ease-out;
 }
@@ -254,10 +290,11 @@ input:focus {
   font-size: 12px;
   text-decoration: none;
   color: white;
-  opacity: 25%;
+  opacity: 40%;
 
   transition: all 0.2s ease-in-out;
 }
+
 #copyright:hover {
   color: aqua;
   opacity: 100%;
@@ -265,47 +302,132 @@ input:focus {
 
 
 
+@media screen and ((max-width: 768px) or (max-height: 480px)){ /*画面サイズが小さいとき*/
 
-
-@media screen and (max-width: 768px) {
-  #shortcuts {
-    display: flex-block;
-    flex-wrap: wrap;
-  }
-
-  #time, #input-field input {
+  #time,
+  #input-field input {
     font-size: 100px;
   }
+
   #input-field input {
     width: 180px;
     overflow: hidden;
   }
-  #input-field .input-colon{
+
+  #input-field .input-colon {
     font-size: 100px;
     transform: translateY(31px);
   }
 
   #timer-menu {
-    transform: translate(-50%, -36px);
-  }
-  #timer-menu button {
-    font-size: 35px;
+    transform: translate(-50%, -40px);
   }
 
   #time-bar {
     transform: translate(-50%, -30px);
   }
 
-  #auto-stop {
-  -ms-transform: scale(2.7, 2.7);
-  -webkit-transform: scale(2.7, 2.7);
-  transform: scale(2.7, 2.7);
-  }
-  #auto-stop-label {
-  padding-left: 8px;
 }
 
+@media screen and (hover: none) and (pointer: coarse) { /*タッチ操作のとき*/
+
+  button, #mute-icon {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid gray;
+    border-radius: 10px;
+  }
+  button:hover, #mute-icon:hover {
+  border-bottom-color: gray;
+}
+
+
+
+  #shortcuts {
+    display: flex-block;
+    flex-wrap: wrap;
+  }
+  #shortcuts button {
+    margin: 0px 8px 8px 0px;
+  }
+  
+
+  #time,
+  #input-field input {
+    font-size: 100px;
+  }
+
+  #input-field input {
+    width: 180px;
+    overflow: hidden;
+  }
+
+  #input-field .input-colon {
+    font-size: 100px;
+    transform: translateY(31px);
+  }
+
+  #timer-menu {
+    transform: translate(-50%, -30px);
+  }
+
+  #timer-menu button {
+    height: 50px;
+    width: 50px;
+  }
+
+  #time-bar {
+    transform: translate(-50%, -30px);
+  }
+
+
+  #auto-stop {
+    -ms-transform: scale(2.3, 2.3);
+    -webkit-transform: scale(2.3, 2.3);
+    transform: scale(2.3, 2.3);
+  }
+
+  #auto-stop-label {
+    padding-left: 4px;
+  }
+
   #volume-option-div {
-    margin-top: 7px;
+    margin-top: 10px;
+  }
+
+  #mute-icon {
+    transform: translate(0, -8px);
+    padding: 8px;
+  }
+
+
+  #copyright {
+    bottom: 0px;
+  }
+}
+
+@media screen and (hover: none) and (pointer: coarse) and (max-height: 399px) { /*タッチ操作かつ横画面のとき*/
+
+  #time {
+    transform: translate(-50%, calc(-135% - 0px));
+  }
+
+  #input-field input {
+    transform: translateY(-0px);
+  }
+  #input-field .input-colon {
+    transform: translateY(31px);
+  }
+  #input-field-guide {
+    transform: translateX(-50%) translateY(-130px);
+  }
+
+  #timer-menu {
+    left: calc(100% - 120px);
+    width: max-content;
+    transform: translate(calc(-50% + 0px), -125px);
+  }
+
+  #time-bar {
+    transform: translate(-50%, -30px);
   }
 }

@@ -3,7 +3,9 @@ const tabIcon = document.getElementById("icon");
 const alarm = new Audio("assets/audio/alarm.m4a");
 alarm.volume = 1;
 const worker = new Worker("./webWorker.js");
+
 let windouWidth = window.innerWidth;
+let windowHeight = window.innerHeight;
 
 const timerEl = {
   title: document.getElementById("title"),
@@ -75,12 +77,13 @@ document.body.addEventListener(
     };
 
     //ミュート[M]
-    if(ev.code == "KeyM") {
+    if (ev.code == "KeyM") {
       if (timerEl.muteCheckbox.checked) {
         timerEl.muteCheckbox.checked = false;
       } else {
         timerEl.muteCheckbox.checked = true;
       }
+      asyncMute()
     }
   },
   { once: false }
@@ -88,12 +91,10 @@ document.body.addEventListener(
 
 
 
-window.onload = () => {hideGuide();}
+window.onload = () => { hideGuide(); }
 
-setInterval(setAutoStopMode, 30);
 setInterval(setVolume, 30);
-setInterval(setMute, 30);
-setInterval(() => { windouWidth = window.innerWidth }, 60);
+setInterval(() => { windouWidth = window.innerWidth; windowHeight = window.innerHeight; }, 1000);
 
 
 
@@ -103,6 +104,12 @@ worker.onmessage = (ev) => {
   if (remainingSeconds > 0) {
     updateClockDisplay(remainingSeconds);
     tst.beforeRemainingSeconds = remainingSeconds;
+
+    if (remainingSeconds == 1) {
+      asyncAutoStopMode();
+      asyncMute();
+    }
+
     return; //残り時間が1秒以上ならここで終了
 
   } else {
@@ -146,7 +153,7 @@ function updateClockDisplay(remainingSeconds) {
   }
 
   timerEl.bar.style.width = (((Math.floor(getRemainingSeconds())) / tst.maxSeconds) * 500) + "px";
-  if (windouWidth < 769) timerEl.bar.style.width = (((Math.floor(getRemainingSeconds())) / tst.maxSeconds) * 300) + "px";
+  if ((windouWidth < 769) || (windowHeight < 481)) timerEl.bar.style.width = (((Math.floor(getRemainingSeconds())) / tst.maxSeconds) * 300) + "px";
 
   const colon = document.getElementById("colon");
 
@@ -172,7 +179,7 @@ function playAlarm() {
     timerEl.title.textContent = "■■■■■■■■■■■■■■■";
     tabIcon.href = "icons/icon_magenta.ico";
 
-    if(!timerEl.muteCheckbox.checked) alarm.play();
+    if (!timerEl.muteCheckbox.checked) alarm.play();
     if (tst.isAutoStopEnabled) reset();
 
   } else {
@@ -215,12 +222,12 @@ function start(timeLeft) {
 
   timerEl.clock.textContent = minutesStr + ":" + secondsStr;
   timerEl.title.textContent = minutesStr + ":" + secondsStr + " Left";
-  timerEl.bar.style.width = (windouWidth < 769) ? (300 + "px") : (500 + "px");
+  timerEl.bar.style.width = ((windouWidth < 769) || (windowHeight < 481)) ? (300 + "px") : (500 + "px");
   timerEl.clock.style.display = "flex";
   timerInputEl.field.style.display = "none";
 
   for (let i = 0; i < timerEl.quickStartButtons.length; i++) {
-    timerEl.quickStartButtons[i].style.color = "transparent";
+    timerEl.quickStartButtons[i].style.opacity = "0%";
     timerEl.quickStartButtons[i].style.filter = "blur(10px)";
   }
   setTimeout(() => {
@@ -229,6 +236,9 @@ function start(timeLeft) {
 
   timerEl.startButton.style.display = "none";
   timerEl.pauseButton.style.display = "inline-block";
+
+  asyncAutoStopMode();
+  asyncMute();
 
   console.log("[" + getRealTimeStr() + "] started\nlength: " + (getRemainingSeconds()));
 }
@@ -282,7 +292,7 @@ function resume() {
 
   setTimeout(() => {
     updateClockDisplay(getRemainingSeconds());
-  }, getRemainingSeconds(true)%1000 +10);
+  }, getRemainingSeconds(true) % 1000 + 10);
 
   const remainingSeconds = getRemainingSeconds();
   const minutesStr = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
@@ -293,6 +303,10 @@ function resume() {
   timerEl.resetButton.style.display = "none";
   timerEl.pauseButton.style.display = "inline-block";
   timerEl.title.textContent = (minutesStr + ":" + secondsStr + " Left");
+
+
+  asyncAutoStopMode();
+  asyncMute();
 
 }
 
@@ -314,7 +328,7 @@ function reset() {
   tabIcon.href = "icon.ico";
 
   for (let i = 0; i < timerEl.quickStartButtons.length; i++) {
-    timerEl.quickStartButtons[i].style.color = "white";
+    timerEl.quickStartButtons[i].style.opacity = "100%";
     timerEl.quickStartButtons[i].style.filter = "blur(0px)";
   }
   timerEl.clock.style.display = "none";
@@ -338,13 +352,18 @@ function reset() {
 }
 
 
-//自動でタイマーを止める を切り替える
-function setAutoStopMode() {
-  if (timerEl.autoStopCheckbox.checked) {
-    tst.isAutoStopEnabled = true;
-  } else {
-    tst.isAutoStopEnabled = false;
-  }
+function asyncAutoStopMode() {
+
+  setTimeout(() => {
+
+    if (timerEl.autoStopCheckbox.checked) {
+      tst.isAutoStopEnabled = true;
+    } else {
+      tst.isAutoStopEnabled = false;
+    }
+
+  }, 30);
+
 }
 
 
@@ -354,7 +373,7 @@ function setVolume() {
   const volume = timerEl.volumeBar.value;
   timerEl.volumeBarLabel.textContent = ("Volume: " + volume + "%");
 
-    if(timerEl.muteCheckbox.checked) {
+  if (timerEl.muteCheckbox.checked) {
     alarm.volume = 0;
   } else {
     alarm.volume = volume * 0.01;
@@ -362,21 +381,23 @@ function setVolume() {
 }
 
 
-//ミュート設定
-function setMute() {
-  if((timerEl.muteCheckbox.checked && timerEl.muteIcon.alt == "Muted") || (!timerEl.muteCheckbox.checked && timerEl.muteIcon.alt == "Unmuted")) return;
+function asyncMute() {
 
-  if(timerEl.muteCheckbox.checked) {
-    timerEl.volumeBar.style.opacity = "20%";
-    timerEl.volumeBarLabel.style.opacity = "20%";
-    timerEl.muteIcon.src = "img/muted.png"
-    timerEl.muteIcon.alt = "Muted";
-  } else {
-    timerEl.volumeBar.style.opacity = "100%";
-    timerEl.volumeBarLabel.style.opacity = "65%";
-    timerEl.muteIcon.src = "img/unmuted.png";
-    timerEl.muteIcon.alt = "Unmuted";
-  }
+  setTimeout(() => {
+
+    if (timerEl.muteCheckbox.checked) {
+      timerEl.volumeBar.style.opacity = "20%";
+      timerEl.volumeBarLabel.style.opacity = "20%";
+      timerEl.muteIcon.src = "img/muted.png"
+      timerEl.muteIcon.alt = "Muted";
+    } else {
+      timerEl.volumeBar.style.opacity = "100%";
+      timerEl.volumeBarLabel.style.opacity = "65%";
+      timerEl.muteIcon.src = "img/unmuted.png";
+      timerEl.muteIcon.alt = "Unmuted";
+    }
+
+  }, 30);
 }
 
 
@@ -404,10 +425,10 @@ function hideGuide() {
  * @returns {number}
  */
 function getRemainingSeconds(includeMilliseconds) {
-  if(includeMilliseconds) {
-    return Math.floor((tst.endTime - (Date.now())) / 1000)+(((tst.endTime - (Date.now())) % 1000) *0.0001);
+  if (includeMilliseconds) {
+    return Math.floor((tst.endTime - (Date.now())) / 1000) + (((tst.endTime - (Date.now())) % 1000) * 0.0001);
   } else {
-  return Math.floor((tst.endTime - (Date.now())) / 1000);
+    return Math.floor((tst.endTime - (Date.now())) / 1000);
   }
 }
 
@@ -421,6 +442,6 @@ function getRealTimeStr(includeMilliseconds) {
   const hoursStr = String(Math.floor(realTime.getHours())).padStart(2, '0');
   const minutesStr = String(Math.floor(realTime.getMinutes())).padStart(2, '0');
   const secondsStr = String(realTime.getSeconds()).padStart(2, '0');
-  if (includeMilliseconds) {return (hoursStr + ":" + minutesStr + ":" + secondsStr+"."+realTime.getMilliseconds());}
-  else {return (hoursStr + ":" + minutesStr + ":" + secondsStr);}
+  if (includeMilliseconds) { return (hoursStr + ":" + minutesStr + ":" + secondsStr + "." + realTime.getMilliseconds()); }
+  else { return (hoursStr + ":" + minutesStr + ":" + secondsStr); }
 }
