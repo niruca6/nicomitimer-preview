@@ -216,7 +216,7 @@ label {
   margin-top: auto;
 
   border: none;
-  transition: all 1s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 input::-webkit-inner-spin-button,
@@ -408,14 +408,17 @@ input:focus {
 @media screen and (hover: none) and (pointer: coarse) and (max-height: 399px) { /*タッチ操作かつ横画面のとき*/
 
   #time {
-    transform: translate(-50%, calc(-135% - 0px));
+    transform: translate(-50%, calc(-135% - 20px));
   }
 
   #input-field input {
-    transform: translateY(-0px);
+    transform: translateY(-20px);
+  }
+  #input-field input:focus {
+    font-size: 60px;
   }
   #input-field .input-colon {
-    transform: translateY(31px);
+    transform: translateY(11px);
   }
   #input-field-guide {
     transform: translateX(-50%) translateY(-130px);
@@ -424,10 +427,10 @@ input:focus {
   #timer-menu {
     left: calc(100% - 120px);
     width: max-content;
-    transform: translate(calc(-50% + 0px), -125px);
+    transform: translate(calc(-50% + 0px), -145px);
   }
 
   #time-bar {
-    transform: translate(-50%, -30px);
+    transform: translate(-50%, -50px);
   }
 }
