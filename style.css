@@ -235,7 +235,7 @@ input:focus {
   font-family: 'Raleway';
   user-select: none;
   margin-top: auto;
-  transition: all 1s ease-out;
+  transition: all 0.2s ease-out;
 }
 
 #input-field-guide {
@@ -243,6 +243,8 @@ input:focus {
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-100px);
+
+  width: max-content;
 
   font-size: 16px;
 }
@@ -387,7 +389,7 @@ input:focus {
   }
 
   #auto-stop-label {
-    padding-left: 4px;
+    padding-left: 8px;
   }
 
   #volume-option-div {
@@ -414,14 +416,16 @@ input:focus {
   #input-field input {
     transform: translateY(-20px);
   }
-  #input-field input:focus {
-    font-size: 60px;
-  }
+
+  #input-field:has(input:focus) input {
+  font-size: 60px;
+}
+
   #input-field .input-colon {
     transform: translateY(11px);
   }
   #input-field-guide {
-    transform: translateX(-50%) translateY(-100px);
+    transform: translateX(-50%) translateY(-130px);
   }
 
   #timer-menu {
