@@ -407,6 +407,7 @@ input:focus {
   }
 }
 
+
 @media screen and (hover: none) and (pointer: coarse) and (max-height: 399px) { /*タッチ操作かつ横画面のとき*/
 
   #time {
