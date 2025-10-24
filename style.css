@@ -125,7 +125,8 @@ label {
   border-bottom-color: white;
 }
 
-#auto-stop {
+
+#auto-stop, #stay-awake {
   -ms-transform: scale(2, 2);
   -webkit-transform: scale(2, 2);
   transform: scale(2, 2);
@@ -134,7 +135,7 @@ label {
   transition: all 0.3s ease-out;
 }
 
-#auto-stop-label {
+#auto-stop-label, #stay-awake-label {
   height: 14px;
   padding-left: 3px;
 
@@ -382,13 +383,11 @@ input:focus {
   }
 
 
-  #auto-stop {
-    -ms-transform: scale(2.3, 2.3);
-    -webkit-transform: scale(2.3, 2.3);
-    transform: scale(2.3, 2.3);
+  #auto-stop, #stay-awake {
+    margin-top: 20px;
   }
 
-  #auto-stop-label {
+  #auto-stop-label, #stay-awake-label {
     padding-left: 8px;
   }
 
@@ -406,7 +405,6 @@ input:focus {
     bottom: 0px;
   }
 }
-
 
 @media screen and (hover: none) and (pointer: coarse) and (max-height: 399px) { /*タッチ操作かつ横画面のとき*/
 
@@ -427,7 +425,7 @@ input:focus {
     transform: translateY(11px);
   }
   #input-field-guide {
-    transform: translateX(-50%) translateY(-130px);
+    transform: translateX(-50%) translateY(-100px);
   }
 
   #timer-menu {
