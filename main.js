@@ -10,6 +10,8 @@ function checkWakeLockSupport() {
   if ("wakeLock" in navigator) {
     isWakeLockSupported = true;
     console.log("ブラウザーはWakeLock API に対応しています。");
+
+    window.alert("ブラウザーはWakeLock API に対応しています。")
   } else {
     hideStayAwakeCheckbox();
     console.log("ブラウザーはロックに対応していません。");
@@ -22,7 +24,7 @@ async function requestWakeLock() {
 
   try {
     wakeLock = await navigator.wakeLock.request("screen");
-    console.log("WakeLock APIを呼び出しました。");
+    window.alert("WakeLock APIを呼び出しました。");
 
   } catch (e) {
     console.log(`${e.name}, ${e.message}`);

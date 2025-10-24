@@ -132,6 +132,8 @@ label {
   transform: scale(2, 2);
   border-width: 0px;
 
+  margin-top: 14px;
+
   transition: all 0.3s ease-out;
 }
 
