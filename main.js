@@ -55,73 +55,6 @@ let tst = {
 
 
 
-
-document.body.addEventListener(
-  "keydown",
-  (ev) => {
-    if ((getRemainingSeconds() < 1) && (tst.isActivated)) {
-      reset();
-      return;
-    };
-    if ((tst.isAllowShortcutkey) && (tst.endTime == undefined) && (ev.code == "Enter")) startWithInput();
-
-    //一時停止/再開[Space]
-    if (ev.code == "Space") {
-      console.log("Space");
-      if ((tst.isActivated) && (!tst.isAllowShortcutkey)) { pause(); }
-      else if ((!tst.isActivated) && (tst.endTime)) { resume(); }
-    };
-
-    //入力消去[Esc]
-    if ((!tst.isActivated) && (tst.endTime == undefined) && (ev.code == "Escape")) {
-      timerInputEl.minutes.value = null;
-      timerInputEl.seconds.value = null;
-    };
-
-    //ミュート[M]
-    if (ev.code == "KeyM") {
-      if (timerEl.muteCheckbox.checked) {
-        timerEl.muteCheckbox.checked = false;
-      } else {
-        timerEl.muteCheckbox.checked = true;
-      }
-      asyncMute()
-    }
-  },
-  { once: false }
-);
-
-
-
-window.onload = () => { hideGuide(); }
-
-setInterval(setVolume, 30);
-setInterval(() => { windouWidth = window.innerWidth; windowHeight = window.innerHeight; }, 1000);
-
-
-
-worker.onmessage = (ev) => {
-  const remainingSeconds = ev.data;
-
-  if (remainingSeconds > 0) {
-    updateClockDisplay(remainingSeconds);
-    tst.beforeRemainingSeconds = remainingSeconds;
-
-    if (remainingSeconds == 1) {
-      asyncAutoStopMode();
-      asyncMute();
-    }
-
-    return; //残り時間が1秒以上ならここで終了
-
-  } else {
-    playAlarm();
-  }
-}
-
-
-
-
 function updateClockDisplay(remainingSeconds) {
   const minutesStr = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
   const secondsStr = String(remainingSeconds % 60).padStart(2, '0');
@@ -393,8 +326,8 @@ function asyncMute() {
       timerEl.muteIcon.src = "img/muted.png"
       timerEl.muteIcon.alt = "Muted";
     } else {
-      timerEl.volumeBar.style.opacity = "100%";
-      timerEl.volumeBarLabel.style.opacity = "65%";
+      timerEl.volumeBar.style.opacity = null;
+      timerEl.volumeBarLabel.style.opacity = null;
       timerEl.muteIcon.src = "img/unmuted.png";
       timerEl.muteIcon.alt = "Unmuted";
     }
@@ -418,7 +351,6 @@ function hideGuide() {
     });
   }, 10000);
 }
-
 
 
 
@@ -447,3 +379,70 @@ function getRealTimeStr(includeMilliseconds) {
   if (includeMilliseconds) { return (hoursStr + ":" + minutesStr + ":" + secondsStr + "." + realTime.getMilliseconds()); }
   else { return (hoursStr + ":" + minutesStr + ":" + secondsStr); }
 }
+
+
+
+
+
+document.body.addEventListener(
+  "keydown",
+  (ev) => {
+    if ((getRemainingSeconds() < 1) && (tst.isActivated)) {
+      reset();
+      return;
+    };
+    if ((tst.isAllowShortcutkey) && (tst.endTime == undefined) && (ev.code == "Enter")) startWithInput();
+
+    //一時停止/再開[Space]
+    if (ev.code == "Space") {
+      console.log("Space");
+      if ((tst.isActivated) && (!tst.isAllowShortcutkey)) { pause(); }
+      else if ((!tst.isActivated) && (tst.endTime)) { resume(); }
+    };
+
+    //入力消去[Esc]
+    if ((!tst.isActivated) && (tst.endTime == undefined) && (ev.code == "Escape")) {
+      timerInputEl.minutes.value = null;
+      timerInputEl.seconds.value = null;
+    };
+
+    //ミュート[M]
+    if (ev.code == "KeyM") {
+      if (timerEl.muteCheckbox.checked) {
+        timerEl.muteCheckbox.checked = false;
+      } else {
+        timerEl.muteCheckbox.checked = true;
+      }
+      asyncMute()
+    }
+  },
+  { once: false }
+);
+
+
+
+worker.onmessage = (ev) => {
+  const remainingSeconds = ev.data;
+
+  if (remainingSeconds > 0) {
+    updateClockDisplay(remainingSeconds);
+    tst.beforeRemainingSeconds = remainingSeconds;
+
+    if (remainingSeconds == 1) {
+      asyncAutoStopMode();
+      asyncMute();
+    }
+
+    return; //残り時間が1秒以上ならここで終了
+
+  } else {
+    playAlarm();
+  }
+}
+
+
+
+window.onload = () => { hideGuide(); }
+
+setInterval(setVolume, 30);
+setInterval(() => { windouWidth = window.innerWidth; windowHeight = window.innerHeight; }, 1000);

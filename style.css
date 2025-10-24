@@ -356,6 +356,11 @@ input:focus {
   }
   
 
+  #volume-bar, #volume-bar-label {
+    opacity: 20%;
+  }
+
+
   #time,
   #input-field input {
     font-size: 100px;
@@ -414,10 +419,10 @@ input:focus {
     transform: translate(-50%, calc(-135% - 20px));
   }
 
-  #input-field #minutes,
-  #input-field #seconds  {
-    transform: translateY(-20px);
-  }
+  #input-field:has(input:focus) #minutes,
+  #input-field:has(input:focus) #seconds  {
+  font-size: 60px;
+}
 
   #input-field:has(input:focus) #minutes,
   #input-field:has(input:focus) #seconds  {
