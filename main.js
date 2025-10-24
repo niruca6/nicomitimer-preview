@@ -2,19 +2,19 @@ let isWakeLockSupported = false;
 let isStayAwakeEnabled = false;
 let wakeLock = null;
 
-
+window.alert("b1");
 /*-----------------------------関数-*/
 
 
 function checkWakeLockSupport() {
   if ("wakeLock" in navigator) {
     isWakeLockSupported = true;
-    console.log("ブラウザーはWakeLock API に対応しています。");
+    console.log("ブラウザはWakeLock API に対応しています。");
 
-    window.alert("ブラウザーはWakeLock API に対応しています。")
+    window.alert("ブラウザはWakeLock API に対応しています。");
   } else {
     hideStayAwakeCheckbox();
-    window.alert("ブラウザーはロックに対応していません。");
+    window.alert("ブラウザはロックに対応していません。");
   }
 }
 
