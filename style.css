@@ -414,7 +414,8 @@ input:focus {
     transform: translate(-50%, calc(-135% - 20px));
   }
 
-  #input-field input {
+  #input-field #minutes,
+  #input-field #seconds  {
     transform: translateY(-20px);
   }
 
