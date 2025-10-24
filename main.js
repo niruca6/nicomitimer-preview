@@ -14,7 +14,7 @@ function checkWakeLockSupport() {
     window.alert("ブラウザーはWakeLock API に対応しています。")
   } else {
     hideStayAwakeCheckbox();
-    console.log("ブラウザーはロックに対応していません。");
+    window.alert("ブラウザーはロックに対応していません。");
   }
 }
 
