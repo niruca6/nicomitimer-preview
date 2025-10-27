@@ -424,9 +424,9 @@ input:focus {
   font-size: 60px;
 }
 
-  #input-field:has(input:focus) #minutes,
-  #input-field:has(input:focus) #seconds  {
-  font-size: 60px;
+  #input-field #minutes,
+  #input-field #seconds  {
+  transform: translateY(-20px);
 }
 
   #input-field .input-colon {
