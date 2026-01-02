@@ -6,6 +6,7 @@ const worker = new Worker("./webWorker.js");
 
 let windouWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
+let lastTapTime;
 
 const timerEl = {
   title: document.getElementById("title"),
@@ -309,22 +310,6 @@ function asyncAutoStopMode() {
 }
 
 
-
-//音量を変更する
-/*
-function setVolume() {
-  const volume = timerEl.volumeBar.value;
-  timerEl.volumeBarLabel.textContent = ("Volume: " + volume + "%");
-
-  if (timerEl.muteCheckbox.checked) {
-    alarm.volume = 0;
-  } else {
-    alarm.volume = volume * 0.01;
-  }
-}
-  */
-
-
 function asyncMute() {
 
   setTimeout(() => {
@@ -429,6 +414,16 @@ document.body.addEventListener(
 );
 
 
+document.addEventListener("touchend", function (ev) {
+  const now = new Date().getTime();
+  const tapInterval = now - lastTapTime;
+
+  if ((tapInterval < 300) && (tapInterval > 0)) ev.preventDefault();
+
+  lastTapTime = now;
+});
+
+
 
 worker.onmessage = (ev) => {
   const remainingSeconds = ev.data;
@@ -454,4 +449,3 @@ worker.onmessage = (ev) => {
 window.onload = () => { hideGuide(); }
 
 setInterval(() => { windouWidth = window.innerWidth; windowHeight = window.innerHeight; }, 1000);
-//setInterval(() => {console.log(timerEl.muteCheckbox.checked)}, 1000);

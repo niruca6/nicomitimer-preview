@@ -354,11 +354,6 @@ input:focus {
   #shortcuts button {
     margin: 0px 8px 8px 0px;
   }
-  
-
-  #volume-bar, #volume-bar-label {
-    opacity: 20%;
-  }
 
 
   #time,
