@@ -1,7 +1,7 @@
 const body = document.getElementById("body");
 const tabIcon = document.getElementById("icon");
-const alarm = new Audio("assets/audio/alarm.m4a");
-alarm.volume = 1;
+
+
 const worker = new Worker("./webWorker.js");
 
 let windouWidth = window.innerWidth;
@@ -114,7 +114,14 @@ function playAlarm() {
     timerEl.title.textContent = "■■■■■■■■■■■■■■■";
     tabIcon.href = "icons/icon_magenta.ico";
 
-    if (!timerEl.muteCheckbox.checked) alarm.play();
+    if (!timerEl.muteCheckbox.checked) {
+      const src = audioctx.createBufferSource();
+      src.buffer = alarm.buffer;
+
+      src.connect(alarm.gainNode).connect(audioctx.destination);
+
+      src.start();
+    }
     if (tst.isAutoStopEnabled) reset();
 
   } else {
@@ -142,7 +149,7 @@ function playAlarm() {
  * タイマーを開始する
  * @param {number} timeLeft 
  */
-function start(timeLeft) {
+function startTimer(timeLeft) {
   tst.startedTime = Date.now();
   tst.endTime = Date.now() + (timeLeft * 1000) + 50; //動作が遅れることを想定して終了時刻を0.05秒遅く設定
   worker.postMessage([tst.endTime, true, false]);
@@ -187,7 +194,7 @@ function startWithInput() {
     return;
   }
 
-  start(newTime)
+  startTimer(newTime)
 }
 
 
@@ -304,6 +311,7 @@ function asyncAutoStopMode() {
 
 
 //音量を変更する
+/*
 function setVolume() {
   const volume = timerEl.volumeBar.value;
   timerEl.volumeBarLabel.textContent = ("Volume: " + volume + "%");
@@ -314,6 +322,7 @@ function setVolume() {
     alarm.volume = volume * 0.01;
   }
 }
+  */
 
 
 function asyncMute() {
@@ -323,7 +332,7 @@ function asyncMute() {
     if (timerEl.muteCheckbox.checked) {
       timerEl.volumeBar.style.opacity = "20%";
       timerEl.volumeBarLabel.style.opacity = "20%";
-      timerEl.muteIcon.src = "img/muted.png"
+      timerEl.muteIcon.src = "img/muted.png";
       timerEl.muteIcon.alt = "Muted";
     } else {
       timerEl.volumeBar.style.opacity = null;
@@ -444,5 +453,5 @@ worker.onmessage = (ev) => {
 
 window.onload = () => { hideGuide(); }
 
-setInterval(setVolume, 30);
 setInterval(() => { windouWidth = window.innerWidth; windowHeight = window.innerHeight; }, 1000);
+//setInterval(() => {console.log(timerEl.muteCheckbox.checked)}, 1000);

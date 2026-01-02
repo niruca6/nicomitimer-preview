@@ -6,7 +6,7 @@ let wakeLock = null;
 /*-----------------------------関数-*/
 
 
-function checkWakeLockSupport() {
+function checkWakeLockAvailability() {
   if ("wakeLock" in navigator) {
     isWakeLockSupported = true;
   } else {
@@ -65,4 +65,4 @@ document.addEventListener('visibilitychange', () => {
 /*-----------------------------実行-*/
 
 
-checkWakeLockSupport();
+checkWakeLockAvailability();
